@@ -1,0 +1,41 @@
+project:
+  type: website
+  output-dir: _site
+  # Copy the CNAME file into the built site so the custom domain
+  # survives every deploy to gh-pages.
+  resources:
+    - CNAME
+
+website:
+  title: "Koen Botermans"
+  site-url: "https://koenbotermans.com"
+  navbar:
+    pinned: false
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+  # No search, no comments, no analytics — kept intentionally minimal.
+
+format:
+  html:
+    theme:
+      - litera        # clean Bootswatch base
+      - theme.scss    # PaperMod-flavored overrides on top
+    # Narrow, centered content column — the signature PaperMod feel.
+    grid:
+      body-width: 720px
+      sidebar-width: 0px
+      margin-width: 0px
+    toc: false
+    anchor-sections: false
+    code-copy: false     # you asked for no code-copy button
+    code-tools: false
+    highlight-style: github
+    link-external-newwindow: true
+
+execute:
+  # Never execute notebooks during `quarto render` in CI.
+  # You run them locally on your GPU; the committed outputs are used as-is.
+  freeze: auto

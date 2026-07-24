@@ -1,0 +1,16 @@
+---
+title: "Koen Botermans"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  fields: [date, title, description]
+  date-format: "YYYY-MM-DD"
+page-layout: full
+---
+
+AI/ML engineer working on computer vision and robotics. Notes and notebooks below —
+each post links to a runnable notebook and an *Open in Colab* badge.

@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>what-to-diffuse-the-basics – Koen Botermans</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1b30e858a7290cbd0655c2f1f2080eaa.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d91a65a8af3791edc4c85c115e6d9da6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Koen Botermans</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> What to diffuse? The basics! </b>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://hojonathanho.github.io/diffusion/assets/img/pgm_diagram_xarrow.png" title="Probabilistic Graphical Model Diagram" class="img-fluid" alt="Probabilistic Graphical Model Diagram"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Diagram from <a href="https://arxiv.org/pdf/2006.11239">Denoising Diffusion Probabilistic Models</a></td>
+</tr>
+</tbody>
+</table>
+<div style="padding: 20px; border-color: #a61d2f; border-radius: 0px; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); border: 2px solid #1279D4; width: 75%; margin: 0 auto; background-color: #1279D4;">
+<pre><code>&lt;p style="font-size: 20px; font-family: 'Georgia'; line-height: 1.5em;"&gt;
+“A diffusion model is a parameterised Markov Chain trained using variational inference to produce samples matching the data after finite time.” - &lt;a href="https://arxiv.org/pdf/2006.11239" style="color: #0000EE; text-decoration: underline;"&gt;Denoising Diffusion Probabilistic Models&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+</div>
+<p>This is a direct quote from the paper, that introduced diffusion models, but how do you make one and what is the intuition behind these diffusion models? That is what I want to explain in this post. It consist out of the following parts;</p>
+<ul>
+<li>What can we do with diffusion models and why do they exists?</li>
+<li>What are the underlying assumptions we make about this diffusion process?</li>
+<li>How do we convert these underlying assumptions to a loss function that we can use to train a model.</li>
+<li>How do we go from loss function to a trainable model and train it?</li>
+</ul>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> What can we do with diffusion models? </b>
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/00-SampleSpace.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>At its core, diffusion models are generative models used to generate new samples of a distribution. The idea behind generative modelling is to derive for a given dataset <span class="math inline">\(\mathcal{D}\)</span> of observations <span class="math inline">\(x^{(1)}, \cdots x^{(N)}\)</span> to learn or derive the underlying distribution from which the data is generated. Thus derive <span class="math inline">\(x \sim p_{data}\)</span>. Which enables us to sample from this distribution and thus generate more samples, which is the goal of diffusion models.</p>
+<p>The sample space for images is <span class="math inline">\(x \in \mathbb{R}^{H\times W}\)</span>, is incredibly big, while most of this space is occupied mostly be noisy samples. As I attempted to visualise in the picture above.</p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Generating samples </b>
+</div>
+<p>As mentioned before, we want to sample previously unseen examples, thus we need a mapping that produces a sample inside the space <span class="math inline">\(x \in \R^{H\times W}\)</span>. A Generative Adversarial Network (GAN), is a technique that produces such a mapping (the generator). This generator takes as input noise and outputs an image |<img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/01-GAN.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"> |:–:|</p>
+<p><span class="math display">\[
+g_\theta(x_{noise}) = x_{img}
+\]</span></p>
+<p>GANs however have two major problems;</p>
+<ul>
+<li>Mode collapse, this meant that the generator only learned to predict one specific sample. Thus it collapses the whole space <span class="math inline">\(\{x | p_{true}(x) \geq 0.9
+\}\)</span> into one sample.</li>
+<li>Unstable training, due to the adversarial nature of a GAN, you have to train a generator and discriminator together. When the complexity of the discriminator and the generator are not balanced, the two models will just stop learning from each other and nothing sensible happens.</li>
+</ul>
+<p>Diffusion models solve these problems by modeling the underlying data distribution in a sequential way. |<img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/02-Diffusion.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"> |:–:|</p>
+<p>In this way the training objective becomes more stable, since the whole problem is split into many smaller problems. And it doesn’t require the training of a discriminator, since the it just learns to denoise samples.</p>
+<p>A different way to look at diffusion models that I found very useful is that of the perspective of score models, that basically says that diffusion models try to a score function <span class="math inline">\(s(x)\)</span>, which is the gradient of the log likelihood and points, for each point <span class="math inline">\(x \in \mathbb{R}^{H\times W}\)</span>to the direction that makes your sample more likely. |<img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/03-ScoreFunction.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"> |:–:| <span class="math display">\[
+s(x) \approx \nabla_x \log{p(x)} \Big(= \epsilon_\theta(x, t) \Big)
+\]</span></p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - Forward process </b>
+</div>
+<p>This part explain the math behind diffusion models and how to get a loss function we will employ to train a model. Most of the math comes from the blogpost <a href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/">What are Diffusion Models?</a> and from the paper <a href="https://arxiv.org/pdf/2006.11239">link</a>. I have rewritten the equations and added the schematics in way that it makes more sense to me, and I hope it makes it helps you as well.</p>
+<p>As just mentioned, diffusion models make the assumption that samples are sequentially constructed from noise. This means that there is a sequence of hidden latent variables that starts with <span class="math inline">\(x_T \sim \mathcal{N}(0, \sigma^2)\)</span> where gradually information is added (or de-noised), until there is a clean sample without noise <span class="math inline">\(x_0\)</span>.</p>
+<p>Before I can explain how to generate data, I need to start with the forward process, the process where data is destroyed.</p>
+<p>This is defined by the approximate posterior.</p>
+<p><span class="math display">\[
+q(x_{1:T}|x_0) = \prod_{t=1}^T q(x_t|x_{t-1})
+\]</span></p>
+<p>With the transition probabilities.</p>
+<p><span class="math display">\[
+q(x_t|x_{t-1}) = \mathcal{N}(x_t|\sqrt{1-\beta_t} x_{t-1}, \beta_tI)
+\]</span></p>
+<p>Where the sequence <span class="math inline">\(\beta_0, \cdots, \beta_{T}\)</span> is the variance schedule that controls how fast information is destroyed in the process. Using the <a href="https://lilianweng.github.io/posts/2018-08-12-vae/#reparameterization-trick">reparameterization trick</a> we can expess <span class="math inline">\(x_t\)</span></p>
+<p><span class="math display">\[
+x_{t} = \sqrt{1-\beta_{t-1}} \cdot x_{t-1} + \sqrt{\beta_{t-1}} \cdot \epsilon_{t-1}
+\]</span></p>
+<p>Were</p>
+<p><span class="math display">\[
+\epsilon \sim \mathcal{N}(0, I)
+\]</span></p>
+<p>The reason why this setup is so convenient is that we can use this property to derive a tractable form for <span class="math inline">\(x_t\)</span></p>
+<p><span class="math display">\[
+\begin{align*}
+x_{t} &amp;= \sqrt{1-\beta_{t-1}} \cdot x_{t-1} + \sqrt{\beta_{t-1}} \cdot \epsilon_{t-1} \\
+x_{t} &amp;= \sqrt{1-\beta_{t-1}} \cdot (\sqrt{1-\beta_{t-2}} \cdot x_{t-2} + \sqrt{\beta_{t-2}} \cdot \epsilon_{t-2}) + \sqrt{\beta_{t-1}} \cdot \epsilon_{t-1} \\
+x_{t} &amp;= \sqrt{1-\beta_{t-1}}  \sqrt{1-\beta_{t-2}} \cdot x_{t-2} + \sqrt{1-\beta_{t-1}}\sqrt{\beta_{t-2}} \cdot \epsilon_{t-2} +  \sqrt{\beta_{t-1}} \cdot \epsilon_{t-1} \\
+\vdots \\
+x_{t} &amp;= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{(1-\bar{\alpha}_t)}\cdot\epsilon_{combined}
+\end{align*}
+\]</span></p>
+<p>Gaussian distribution to derive a tractable form;</p>
+<p><span class="math display">\[
+q(x_t|x_0) = \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t} x_0, (1-\bar{\alpha}_t)I)
+\]</span></p>
+<p>Where we use the identities</p>
+<p><span class="math display">\[
+\alpha_t = 1-\beta_t \\
+\bar{\alpha}=\prod_{s=1}^t\alpha_t
+\]</span></p>
+<p>This simply means that we can sample <span class="math inline">\(x_t\)</span> for arbitrary <span class="math inline">\(t\)</span> using the reparameterization trick.</p>
+<p>Before we are finished with the forward process, I want to define one more probability, the forward process posteriors;</p>
+<p><span class="math display">\[
+q(x_{t-1}|x_t ,x_0)  = \mathcal{N}(x_{t-1};\hat{\mu}_t(x_t, x_0), \hat{\beta}_t)
+\]</span></p>
+<p>Where</p>
+<p><span class="math display">\[
+\hat{\mu}_t(x_t, x_0) = \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1-\bar\alpha_t}x_0 + \frac{\sqrt{\alpha_t}(1-\bar\alpha_{t-1})}{{1-\bar\alpha}_t}x_t
+\]</span></p>
+<p>And</p>
+<p><span class="math display">\[
+\hat{\beta}_t = \frac{1-\bar{\alpha}_{t-1}}{1-\bar\alpha_t}\beta_t
+\]</span></p>
+<p>The reason why this guy is important will be clear at the end of the blogpost. Now we know, how we can derive, given a sample <span class="math inline">\(x \in \mathcal{D}\)</span>, a latent <span class="math inline">\(x_t\)</span> for an arbitrary <span class="math inline">\(t\)</span>. |<img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/05-Forward.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"> |:–:|</p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - Reverse process </b>
+</div>
+<p>So, now we have defined the forward process, lets look at what we actually want to learn, namely the reverse process. This process is defined by</p>
+<p><span class="math display">\[
+p_\theta(x_0) = \int p_\theta(x_0, x_1, \cdots, x_{T-1}) d{x_{1:T}}
+\]</span></p>
+<p><span class="math display">\[
+p_\theta(x_0, \cdots, x_{T-1}) = p_\theta(x_0)\prod_{t=1}^Tp_\theta(x_{t-1}|x_t)
+\]</span></p>
+<p>In this reverse process the transitions are assumed to be</p>
+<p><span class="math display">\[
+\begin{align*}
+p_{\theta}(x_{t-1}|x_t)  &amp;= \mathcal{N}\Big(x_{t-1};\mu_\theta(x_t, t), \hat{\beta}_t \mathbf{I}\Big )
+\end{align*}
+\]</span></p>
+<p>Where <span class="math inline">\(\mu_\theta(x_t, t)\)</span> is the function distribution we want to learn! This function we can rewrite to;</p>
+<p><span class="math display">\[
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \Big(x_t - \frac{\beta_t}{\sqrt{1-\hat\alpha_t}}\epsilon_\theta(x_t, t) \Big)
+\]</span></p>
+<p>When we have this function <span class="math inline">\(p_\theta(x_{t-1}|x_t)\)</span>, we can use the resample trick to sequentially reconstruct samples from noise.</p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - From definition to loss function </b>
+</div>
+<p>So we just defined the diffusion process as a Markov chain, now we need to come up with a loss which we can use to optimise the parameters of our model <span class="math inline">\(\theta\)</span>.</p>
+<p>Starting with the joint distribution can be done by minimising the log-likelihood for the model;</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp; -\log \big( p_{\theta}(x) \big) = -\log \big( \int p_\theta(x_{0:T})dx_{1:T} \big) \\
+&amp;=-\log \big( \int p_\theta(x_{0:T})\cdot \frac{q(x_{1:T}|x_0)}{q(x_{1:T}|x_0)} dx_{1:T} \big) \\
+&amp;= -\log \big(\mathbb{E}_q\Big[ \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)} \Big] \big)\leq -\mathbb{E}_q\Big[\log \big( \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)} \Big) \Big] \\
+&amp;=-\mathbb{E}_q\Big[-\log p(x_T) - \sum_{t\geq 1} \log \{\frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\} \Big]
+\end{align*}
+\]</span></p>
+<p>The problem with this is that we are now comparing <span class="math inline">\(p_\theta(x_{t-1}|x_t)\)</span> with <span class="math inline">\(q(x_t|x_{t-1})\)</span>. It would be way nicer if we could compare for each timestep <span class="math inline">\(t\)</span>, the approximate reverse forward process with the posterior forward process, <span class="math inline">\(q(x_{t-1}|x_t, x_0)\)</span> (which we just derived). This can be done by rewriting if we substitute;</p>
+<p><span class="math display">\[
+q(x_t|x_{t-1}) = \frac{q(x_t|x_0)}{q(x_{t-1}|x_0)} \cdot q(x_{t-1}|x_t, x_0)\\
+\]</span></p>
+<p>To obtain</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;=-\mathbb{E}_q\Big[-\log p(x_T) - \sum_{t\geq 1} \log \{\frac{p_\theta(x_{t-1} |x_t)}{q(x_t|x_{t-1})}\} \Big] \\
+&amp;=-\mathbb{E}_q\Big[-\log p(x_T) - \sum_{t&gt;1} \log \{\frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\} -\log \big\{ \frac{p_\theta(x_0|x_1)}{q(x_1|x_0)}\big\}\Big] \\
+&amp;=-\mathbb{E}_q\Big[-\log p(x_T) - \sum_{t&gt;1} \log \Bigg\{\frac{p_\theta(x_{t-1}|x_t}{q(x_{t-1}|x_t, x_0)}\cdot\frac{q(x_{t-1}|x_0)} {q(x_t|x_0)}\Bigg\} -\log \big\{ \frac{p_\theta(x_0|x_1)}{q(x_1|x_0)}\big\}\Big] \\
+\end{align*}
+\]</span></p>
+<p>Rewritting</p>
+<p><span class="math display">\[
+-\sum_{t&gt;1}\log\Bigg\{\frac{q(x_{t-1}|x_0)} {q(x_t|x_0)}\Bigg\} = \log q(x_1|x_0) - \log q(x_T|x_0)
+\]</span></p>
+<p>And substitution gives us</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;=-\mathbb{E}_q\Big[-\log p(x_T) - \sum_{t&gt;1} \log \Bigg\{\frac{p_\theta(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)}\cdot\frac{q(x_{t-1}|x_0)} {q(x_t|x_0)}\Bigg\} -\log \big\{ \frac{p_\theta(x_0|x_1)}{q(x_1|x_0)}\big\}\Big] \\
+&amp;=-\mathbb{E}_q\Big[ - \log \Big\{\frac{p(x_T)}{q(x_T|x_0)}\Big\} - \sum_{t&gt;1} \log \Bigg\{\frac{p_\theta(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)}\Bigg\} - \log\big\{p_\theta(x_0|x_1)\big\}\Big]
+\end{align*}
+\]</span></p>
+<p>This means that if we want parameters <span class="math inline">\(\theta\)</span> that minimises the log-likelihood, we need to make sure that these parameters minimises a lower bound which consist out of the following terms;</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb{E}_q\Big[&amp;D_{KL}\big[q(x_1|x_0)||p(x_1|x_0)\big] \\
+&amp;+ \sum_{t&gt;1}D_{KL}\big[q(x_{t-1}|x_t, x_0) || p_\theta(x_{t-1}|x_t) \big]
+\\ &amp;-\log p_\theta(x_0|x_1)
+\Big]
+\end{align*}
+\]</span></p>
+<p>Which we can decompose into;</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;L_T = D_{KL}\big[q(x_T|x_0)||p(x_T)\big] \\
+&amp;L_{t-1} = \sum_{t&gt;1}D_{KL}\big[q(x_{t-1}|x_t, x_0) || p_\theta(x_{t-1}|x_t) \big]\\
+&amp;L_0 = - \log p_\theta(x_0|x_1)
+\end{align*}
+\]</span></p>
+<p>This basically says that we can optimise the lower bound by only looking at <span class="math inline">\(L_{t-1}\)</span>, because <span class="math inline">\(L_T\)</span> is constant during training and can be ignored.</p>
+<p>Because both <span class="math inline">\(p_\theta\)</span> and <span class="math inline">\(q\)</span> are both Gaussians, the divergence becomes;</p>
+<p><span class="math display">\[
+L_{t-1} = \mathbb{E}_q\Big[\frac{1}{2\sigma^2_t}||\hat\mu(x_t, x_0) - \mu_\theta(x_t, t)||^2\Big]
+\]</span></p>
+<p>This means that the most straightforward way to implement the reverse diffusion process is to simply predict <span class="math inline">\(\mu(x_t, x_0)\)</span>. This is the first way to implement a diffusion model.</p>
+<p>The second way is rewriting to;</p>
+<p><span class="math display">\[
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \Big(x_t - \frac{\beta_t}{\sqrt{1-\hat\alpha_t}}\epsilon_\theta(x_t, t) \Big)
+\]</span></p>
+<p>The authors of the paper found this more convenient. Which leads to an even simpler version of the lower bound <span class="math display">\[
+L_{simple}(\theta) = \mathbb{E}\Big[||\epsilon - \epsilon_\theta(\sqrt{\hat\alpha_t}x_0 +\sqrt{1-\hat\alpha_t}\epsilon, t)||^2\Big]
+\]</span></p>
+<p>In this way we don’t directly predict, given a variable <span class="math inline">\(x_t\)</span> what was the previous <span class="math inline">\(x_{t-1}\)</span>, but we predict, given <span class="math inline">\(x_t\)</span>, what the noise <span class="math inline">\(\epsilon_{\theta}(x_t, t)\)</span> at that given timestep. Intuitively, we predict which direction we have to move to make our sample less noisy. |<img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/06-DiffusionLoss.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"> |:–:|</p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> UNET architecture </b>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://github.com/JPABotermans/KaggleNotebooks/blob/main/Images/DiffusionModels/06-Unet.png?raw=true" class="img-fluid" alt="Probabilistic Graphical Model Diagram"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">UNET diagram from <a href="https://arxiv.org/abs/1505.04597">U-Net: Convolutional Networks for Biomedical Image Segmentation</a></td>
+</tr>
+</tbody>
+</table>
+<p>So now we know what we want, namely <span class="math inline">\(\epsilon_\theta(x, t)\)</span>, a model that takes as input a distorted sample <span class="math inline">\(x_t\)</span> and outputs the noise <span class="math inline">\(\epsilon\)</span> that was added for timestep <span class="math inline">\(t\)</span> and we know that we want to apply a mse loss on this model. So for this we use an UNET, just like the authors of the original diffusion models, and we use a convolution with a shift scale operation to condition this on the timestep.</p>
+<p>This UNET consist out of a few building blocks which I will explain from small to big, starting with a basic convolutional block;</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConvBlock(torch.nn.Module):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 in_channels: <span class="bu">int</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                 out_channels: <span class="bu">int</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                 kernel_size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                 stride: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 padding: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 bias: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                 nrm: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                 act: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""A basic convolutional block, convolution, activation and normalization. Uses Groupnorm.</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv <span class="op">=</span> torch.nn.Conv2d(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            in_channels<span class="op">=</span>in_channels, </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            out_channels<span class="op">=</span>out_channels, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            kernel_size<span class="op">=</span>kernel_size, </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            stride<span class="op">=</span>stride, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            padding<span class="op">=</span>padding, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            bias<span class="op">=</span>bias)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nrm_fn <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">8</span>, num_channels<span class="op">=</span>out_channels) <span class="cf">if</span> nrm <span class="cf">else</span> torch.nn.Identity()</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.act_fn <span class="op">=</span> torch.nn.LeakyReLU(inplace<span class="op">=</span><span class="va">True</span>) <span class="cf">if</span> act <span class="cf">else</span> torch.nn.Identity()</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(<span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x)))</span></code></pre></div>
+<p>However, we want a model that can be conditioned on time <span class="math inline">\(t\)</span>, we use a shift-scale operation on the output of a normal convolution layer.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TimeConvBlock(ConvBlock):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        t_scale, t_shift <span class="op">=</span> t.chunk(<span class="dv">2</span>, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(x <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> t_scale[..., <span class="va">None</span>, <span class="va">None</span>]) <span class="op">+</span> t_shift[..., <span class="va">None</span>, <span class="va">None</span>])</span></code></pre></div>
+<p>These <code>TimeConvBlocks</code> will be combined to make a <code>TimeResidualBlock</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TimeResidualBlock(torch.nn.Module):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Basic residual block with time conditioning.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Time conditioning is done by employing a scale/shift operator on the projected features before the activation.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Contains 3 convolutional blocks, the last one without activation.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    The residual connection is added to the last output.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_1 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_2 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_3 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels, act<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> x.clone()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.conv_block_1(x<span class="op">=</span>x,t<span class="op">=</span>t)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.conv_block_2(x<span class="op">=</span>x,t<span class="op">=</span>t)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.conv_block_3(x<span class="op">=</span>x,t<span class="op">=</span>t) <span class="op">+</span> x</span></code></pre></div>
+<p>Both an an EncoderBlock and a DecoderBlock consist out of one <code>TimeResidualBlock</code> and a <code>Resample Block</code>. In the <code>EncoderBlock</code> the resample operation is done first, while in the <code>DecoderBlock</code> the resample operation is done last, such that the <code>TimeResidualBlock</code> operates on features maps of low resolution.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ResidualUnetBlock(torch.nn.Module):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, out_channels: <span class="bu">int</span>, upsample: <span class="bu">bool</span>, time_channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.upsample <span class="op">=</span> upsample</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.upsample:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="co">#This means it is an decoder block, so we do the first the convolution block, then the resample block</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.residual_block <span class="op">=</span> TimeResidualBlock(channels<span class="op">=</span>in_channels)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.resample_block <span class="op">=</span> ConvUpsample(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="co">#This means that it is an encoder block so first resample, then convolutional block</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.resample_block <span class="op">=</span> ConvDownSample(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.residual_block <span class="op">=</span> TimeResidualBlock(channels<span class="op">=</span>out_channels)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.timestep_block <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                torch.nn.Linear(time_channels, out_channels<span class="op">*</span><span class="dv">2</span> <span class="cf">if</span> <span class="kw">not</span> upsample <span class="cf">else</span> in_channels<span class="op">*</span><span class="dv">2</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                torch.nn.SiLU(),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> <span class="bu">tuple</span>[torch.Tensor, torch.Tensor]:</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        h <span class="op">=</span> x.clone()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> <span class="va">self</span>.timestep_block(t)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>.upsample:</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.resample_block(x)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.residual_block(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.upsample:</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.resample_block(x)        </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x, h</span></code></pre></div>
+<p>Combining these blocks gives our model</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UNET(torch.nn.Module):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, channels: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.in_channels <span class="op">=</span> in_channels</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.channels <span class="op">=</span> channels</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.init_cnv <span class="op">=</span> ConvBlock(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>channels[<span class="dv">0</span>])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        time_channels <span class="op">=</span> channels[<span class="dv">0</span>] <span class="op">*</span> <span class="dv">4</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.time_enc <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            SinusoidalPositionEmbeddings(time_channels<span class="op">=</span>channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>, channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            torch.nn.SiLU(),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Encoder/decoder</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.encoder <span class="op">=</span> torch.nn.ModuleList([])</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.decoder <span class="op">=</span> torch.nn.ModuleList([])</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> in_channels, out_channels <span class="kw">in</span> <span class="bu">zip</span>(channels[:<span class="op">-</span><span class="dv">1</span>], channels[<span class="dv">1</span>:]):</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.encoder.append(ResidualUnetBlock(in_channels, out_channels, time_channels<span class="op">=</span>time_channels, upsample<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.decoder.append(ResidualUnetBlock(out_channels<span class="op">*</span><span class="dv">2</span>, in_channels,time_channels<span class="op">=</span>time_channels,  upsample<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attn_block <span class="op">=</span> Attention2D(in_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>], out_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">2</span>, head_channels<span class="op">=</span><span class="dv">16</span>, n_heads<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attn_norm <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">1</span>, num_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">2</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.final_cnv <span class="op">=</span> ConvBlock(in_channels<span class="op">=</span>channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, out_channels<span class="op">=</span><span class="va">self</span>.in_channels, nrm<span class="op">=</span><span class="va">False</span>, act<span class="op">=</span><span class="va">False</span>, )</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.init_cnv(x)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> <span class="va">self</span>.time_enc(t)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        skip_connection <span class="op">=</span> []</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> layer <span class="kw">in</span> <span class="va">self</span>.encoder:</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            x, h <span class="op">=</span> layer(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            skip_connection.append(h)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.attn_block(x)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.attn_norm(x)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> layer <span class="kw">in</span> <span class="va">self</span>.decoder[::<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>            x, _ <span class="op">=</span> layer(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> torch.cat((x, skip_connection.pop(<span class="op">-</span><span class="dv">1</span>)), dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.final_cnv(x)</span></code></pre></div>
+<p>::: {#c416fb47 .cell _cell_guid=‘b1076dfc-b9ad-4769-8c92-a6c4dae69d19’ _kg_hide-input=‘true’ _kg_hide-output=‘true’ _uuid=‘8f2839f25d086af736a60e9eeb907d3b93b6e0e5’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:10.846058,“end_time”:“2026-06-28T15:57:17.317566”,“exception”:false,“start_time”:“2026-06-28T15:57:06.471508”,“status”:“completed”}}’ tags=‘[]’ execution_count=1}</p>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> einops</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span></code></pre></div>
+<p>:::</p>
+<p>::: {#fe003be2 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.014501,“end_time”:“2026-06-28T15:57:17.338236”,“exception”:false,“start_time”:“2026-06-28T15:57:17.323735”,“status”:“completed”}}’ tags=‘[]’ execution_count=2}</p>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>eval_steps <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>beta_start <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>beta_end <span class="op">=</span> <span class="fl">0.015</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>diffusion_timesteps <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>n_trn_steps <span class="op">=</span> <span class="dv">5_000</span></span></code></pre></div>
+<p>:::</p>
+<p>::: {#9e857bee .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:2.463078,“end_time”:“2026-06-28T15:57:19.807409”,“exception”:false,“start_time”:“2026-06-28T15:57:17.344331”,“status”:“completed”}}’ tags=‘[]’ execution_count=3}</p>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>transforms <span class="op">=</span> torchvision.transforms.Compose([</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    torchvision.transforms.ToTensor(),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    torchvision.transforms.Normalize((<span class="fl">0.0</span>,), (<span class="fl">1.0</span>,))])</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">"."</span>, transform<span class="op">=</span>transforms, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>loader <span class="op">=</span> torch.utils.data.DataLoader(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    dataset<span class="op">=</span>dataset,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    drop_last<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz to ./MNIST/raw/train-images-idx3-ubyte.gz</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 9.91M/9.91M [00:00&lt;00:00, 41.9MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Extracting ./MNIST/raw/train-images-idx3-ubyte.gz to ./MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz to ./MNIST/raw/train-labels-idx1-ubyte.gz</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 28.9k/28.9k [00:00&lt;00:00, 1.17MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Extracting ./MNIST/raw/train-labels-idx1-ubyte.gz to ./MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz to ./MNIST/raw/t10k-images-idx3-ubyte.gz</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 1.65M/1.65M [00:00&lt;00:00, 10.5MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Extracting ./MNIST/raw/t10k-images-idx3-ubyte.gz to ./MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz to ./MNIST/raw/t10k-labels-idx1-ubyte.gz</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 5.61MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Extracting ./MNIST/raw/t10k-labels-idx1-ubyte.gz to ./MNIST/raw
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<p>:::</p>
+<p>::: {#4f6352ca .cell _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.017081,“end_time”:“2026-06-28T15:57:19.832178”,“exception”:false,“start_time”:“2026-06-28T15:57:19.815097”,“status”:“completed”}}’ tags=‘[]’ execution_count=4}</p>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_diffusion_dict_np(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    beta_start: <span class="bu">float</span>, beta_end: <span class="bu">float</span>, diffusion_timesteps: <span class="bu">int</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, np.ndarray]:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    betas <span class="op">=</span> np.linspace(beta_start, beta_end, diffusion_timesteps)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    alphas <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> betas</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    alphas_cumprod <span class="op">=</span> np.cumprod(alphas, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    alphas_cumprod_prev <span class="op">=</span> np.pad(alphas_cumprod[:<span class="op">-</span><span class="dv">1</span>], (<span class="dv">1</span>, <span class="dv">0</span>), constant_values<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    sqrt_recip_alphas <span class="op">=</span> np.sqrt(<span class="fl">1.0</span> <span class="op">/</span> alphas)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    sqrt_alphas_cumprod <span class="op">=</span> np.sqrt(alphas_cumprod)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    sqrt_one_minus_alphas_cumprod <span class="op">=</span> np.sqrt(<span class="fl">1.0</span> <span class="op">-</span> alphas_cumprod)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    posterior_variance <span class="op">=</span> betas <span class="op">*</span> (<span class="fl">1.0</span> <span class="op">-</span> alphas_cumprod_prev) <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">-</span> alphas_cumprod)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"betas"</span>: betas,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"alphas"</span>: alphas,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"alphas_cumprod"</span>: alphas_cumprod,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"alphas_cumprod_prev"</span>: alphas_cumprod_prev,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sqrt_recip_alphas"</span>: sqrt_recip_alphas,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sqrt_alphas_cumprod"</span>: sqrt_alphas_cumprod,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sqrt_one_minus_alphas_cumprod"</span>: sqrt_one_minus_alphas_cumprod,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"posterior_variance"</span>: posterior_variance,</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>:::</p>
+<p>::: {#d3e7588a .cell _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.016141,“end_time”:“2026-06-28T15:57:19.855623”,“exception”:false,“start_time”:“2026-06-28T15:57:19.839482”,“status”:“completed”}}’ tags=‘[]’ execution_count=5}</p>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> q_sample(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    gaussian_dict_np: <span class="bu">dict</span>[<span class="bu">str</span>, np.ndarray],</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    x_start: np.ndarray,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    timesteps: np.ndarray,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    noise: np.ndarray,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Forward process, this we add noise to x_start=x0.</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">    The amount of noise we add is defined by the variance schedule defined in the gaussian_dict_np.</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">        x_start (torch.Tensor): Start </span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">        t (int): Diffusion timestep, this value determines the scale of the noise we will add.</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">        noise (torch.Tensor, optional): The noise to add, this is the amount of noise the network should predict.</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">        torch.Tensor: x_t</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    sqrt_alphas_cumprod_t <span class="op">=</span> gaussian_dict_np[<span class="st">"sqrt_alphas_cumprod"</span>][timesteps]</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    sqrt_one_minus_alphas_cumprod_t <span class="op">=</span> gaussian_dict_np[<span class="st">"sqrt_one_minus_alphas_cumprod"</span>][</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        timesteps</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sqrt_alphas_cumprod_t.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span> x_start <span class="op">+</span> sqrt_one_minus_alphas_cumprod_t.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span> noise</span></code></pre></div>
+<p>:::</p>
+<p>::: {#5f4e64e2 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.01885,“end_time”:“2026-06-28T15:57:19.883145”,“exception”:false,“start_time”:“2026-06-28T15:57:19.864295”,“status”:“completed”}}’ tags=‘[]’ execution_count=6}</p>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConvBlock(torch.nn.Module):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                 in_channels: <span class="bu">int</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                 out_channels: <span class="bu">int</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                 kernel_size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                 stride: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span>, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                 padding: <span class="bu">int</span> <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                 bias: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                 nrm: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                 act: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>                ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""A basic convolutional block, convolution, activation and normalization. Uses Groupnorm.</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv <span class="op">=</span> torch.nn.Conv2d(</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>            in_channels<span class="op">=</span>in_channels, </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>            out_channels<span class="op">=</span>out_channels, </span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>            kernel_size<span class="op">=</span>kernel_size, </span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>            stride<span class="op">=</span>stride, </span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>            padding<span class="op">=</span>padding, </span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>            bias<span class="op">=</span>bias)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nrm_fn <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">8</span>, num_channels<span class="op">=</span>out_channels) <span class="cf">if</span> nrm <span class="cf">else</span> torch.nn.Identity()</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.act_fn <span class="op">=</span> torch.nn.LeakyReLU(inplace<span class="op">=</span><span class="va">True</span>) <span class="cf">if</span> act <span class="cf">else</span> torch.nn.Identity()</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(<span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x)))</span></code></pre></div>
+<p>:::</p>
+<p>::: {#48dc013d .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.015824,“end_time”:“2026-06-28T15:57:19.906180”,“exception”:false,“start_time”:“2026-06-28T15:57:19.890356”,“status”:“completed”}}’ tags=‘[]’ execution_count=7}</p>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TimeConvBlock(ConvBlock):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        t_scale, t_shift <span class="op">=</span> t.chunk(<span class="dv">2</span>, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(x <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> t_scale[..., <span class="va">None</span>, <span class="va">None</span>]) <span class="op">+</span> t_shift[..., <span class="va">None</span>, <span class="va">None</span>])</span></code></pre></div>
+<p>:::</p>
+<p>::: {#eea0f887 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.015933,“end_time”:“2026-06-28T15:57:19.929572”,“exception”:false,“start_time”:“2026-06-28T15:57:19.913639”,“status”:“completed”}}’ tags=‘[]’ execution_count=8}</p>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConvDownSample(torch.nn.Module):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, out_channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels, kernel_size<span class="op">=</span><span class="dv">3</span>, stride<span class="op">=</span><span class="dv">2</span>, padding<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nrm_fn <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">8</span>, num_channels<span class="op">=</span>out_channels)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.act_fn <span class="op">=</span> torch.nn.LeakyReLU(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(<span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x)))</span></code></pre></div>
+<p>:::</p>
+<p>::: {#ff15dc0d .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.016642,“end_time”:“2026-06-28T15:57:19.953830”,“exception”:false,“start_time”:“2026-06-28T15:57:19.937188”,“status”:“completed”}}’ tags=‘[]’ execution_count=9}</p>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConvUpsample(torch.nn.Module):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, out_channels:<span class="bu">int</span>, ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels, kernel_size<span class="op">=</span><span class="dv">3</span>, stride<span class="op">=</span><span class="dv">1</span>, padding<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nrm_fn <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">8</span>, num_channels<span class="op">=</span>out_channels)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.act_fn <span class="op">=</span> torch.nn.LeakyReLU(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> torch.nn.functional.interpolate(x, scale_factor<span class="op">=</span><span class="dv">2</span>, )</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.act_fn(<span class="va">self</span>.nrm_fn(<span class="va">self</span>.conv(x)))</span></code></pre></div>
+<p>:::</p>
+<p>::: {#e87994a3 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.016669,“end_time”:“2026-06-28T15:57:19.977790”,“exception”:false,“start_time”:“2026-06-28T15:57:19.961121”,“status”:“completed”}}’ tags=‘[]’ execution_count=10}</p>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TimeResidualBlock(torch.nn.Module):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Basic residual block with time conditioning.</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Time conditioning is done by employing a scale/shift operator on the projected features before the activation.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Contains 3 convolutional blocks, the last one without activation.</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">    The residual connection is added to the last output.</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_1 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_2 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_block_3 <span class="op">=</span> TimeConvBlock(in_channels<span class="op">=</span>channels, out_channels<span class="op">=</span>channels, act<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> x.clone()</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.conv_block_1(x<span class="op">=</span>x,t<span class="op">=</span>t)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.conv_block_2(x<span class="op">=</span>x,t<span class="op">=</span>t)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.conv_block_3(x<span class="op">=</span>x,t<span class="op">=</span>t) <span class="op">+</span> x</span></code></pre></div>
+<p>:::</p>
+<p>::: {#fd15747d .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.018432,“end_time”:“2026-06-28T15:57:20.003587”,“exception”:false,“start_time”:“2026-06-28T15:57:19.985155”,“status”:“completed”}}’ tags=‘[]’ execution_count=11}</p>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ResidualUnetBlock(torch.nn.Module):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, out_channels: <span class="bu">int</span>, upsample: <span class="bu">bool</span>, time_channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.upsample <span class="op">=</span> upsample</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.upsample:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>            <span class="co">#This means it is an decoder block, so we do the first the convolution block, then the resample block</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.residual_block <span class="op">=</span> TimeResidualBlock(channels<span class="op">=</span>in_channels)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.resample_block <span class="op">=</span> ConvUpsample(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>            <span class="co">#This means that it is an encoder block so first resample, then convolutional block</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.resample_block <span class="op">=</span> ConvDownSample(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>out_channels)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.residual_block <span class="op">=</span> TimeResidualBlock(channels<span class="op">=</span>out_channels)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.timestep_block <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>                torch.nn.Linear(time_channels, out_channels<span class="op">*</span><span class="dv">2</span> <span class="cf">if</span> <span class="kw">not</span> upsample <span class="cf">else</span> in_channels<span class="op">*</span><span class="dv">2</span>),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>                torch.nn.SiLU(),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> <span class="bu">tuple</span>[torch.Tensor, torch.Tensor]:</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        h <span class="op">=</span> x.clone()</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> <span class="va">self</span>.timestep_block(t)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>.upsample:</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.resample_block(x)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.residual_block(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.upsample:</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.resample_block(x)        </span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x, h</span></code></pre></div>
+<p>:::</p>
+<p>::: {#e1fdca0f .cell _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.02216,“end_time”:“2026-06-28T15:57:20.033448”,“exception”:false,“start_time”:“2026-06-28T15:57:20.011288”,“status”:“completed”}}’ tags=‘[]’ execution_count=12}</p>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Attention2D(torch.nn.Module):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, out_channels: <span class="bu">int</span>, head_channels: <span class="bu">int</span>, n_heads: <span class="bu">int</span>, ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Attention block that computes the self attention for each feature.</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">        First projects the features to Q, K, V embeddings.</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Reshapes these blocks by collapsing the H, W axis.</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Then computes a similarity score.</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Then computes the output values.</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.embedding_dim <span class="op">=</span> head_channels <span class="op">*</span> n_heads</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.q_scale <span class="op">=</span> head_channels <span class="op">**</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n_heads <span class="op">=</span> n_heads</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.out_channels <span class="op">=</span> out_channels</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_q <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span><span class="va">self</span>.embedding_dim, kernel_size<span class="op">=</span><span class="dv">1</span>, stride<span class="op">=</span><span class="dv">1</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_k <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span><span class="va">self</span>.embedding_dim, kernel_size<span class="op">=</span><span class="dv">1</span>, stride<span class="op">=</span><span class="dv">1</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_v <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span><span class="va">self</span>.embedding_dim, kernel_size<span class="op">=</span><span class="dv">1</span>, stride<span class="op">=</span><span class="dv">1</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.conv_out <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span><span class="va">self</span>.embedding_dim, out_channels<span class="op">=</span><span class="va">self</span>.out_channels, kernel_size<span class="op">=</span><span class="dv">1</span>, stride<span class="op">=</span><span class="dv">1</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        N, C, H, W <span class="op">=</span> x.shape</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        q <span class="op">=</span> <span class="va">self</span>.conv_q(x)</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> <span class="va">self</span>.conv_k(x)</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> <span class="va">self</span>.conv_v(x)</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># re-arrange the q, k, v from (N, C, H, W) to (N, n_heads, head_channels, HxW)</span></span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>        q <span class="op">=</span> einops.rearrange(q, pattern<span class="op">=</span><span class="st">"N (a b) H W -&gt; N a b (H W)"</span>, a<span class="op">=</span><span class="va">self</span>.n_heads) <span class="op">*</span> <span class="va">self</span>.q_scale</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> einops.rearrange(k, pattern<span class="op">=</span><span class="st">"N (a b) H W -&gt; N a b (H W)"</span>, a<span class="op">=</span><span class="va">self</span>.n_heads)</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> einops.rearrange(v, pattern<span class="op">=</span><span class="st">"N (a b) H W -&gt; N a b (H W)"</span>, a<span class="op">=</span><span class="va">self</span>.n_heads)</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>        similarity_matrix <span class="op">=</span> torch.einsum(<span class="st">"N a b i, N a b j -&gt; N a i j"</span>, q, k)</span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a>        similarity_matrix <span class="op">=</span> torch.nn.functional.softmax(similarity_matrix, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> torch.einsum(<span class="st">"N a i j, N a d j -&gt; N a i d"</span>, similarity_matrix, v)</span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> einops.rearrange(output, <span class="st">"N a (H W) d-&gt;N (a d) H W"</span>,  H<span class="op">=</span>H, W<span class="op">=</span>W)</span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.conv_out(output)</span></code></pre></div>
+<p>:::</p>
+<p>::: {#8a4d63df .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.01714,“end_time”:“2026-06-28T15:57:20.058257”,“exception”:false,“start_time”:“2026-06-28T15:57:20.041117”,“status”:“completed”}}’ tags=‘[]’ execution_count=13}</p>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SinusoidalPositionEmbeddings(torch.nn.Module):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, time_channels: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.time_channels <span class="op">=</span> time_channels</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.embeddings <span class="op">=</span> torch.log(torch.Tensor([<span class="dv">10_000</span>])) <span class="op">/</span> (<span class="va">self</span>.time_channels <span class="op">//</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        embeddings <span class="op">=</span> torch.exp(torch.arange(<span class="va">self</span>.time_channels <span class="op">//</span> <span class="dv">2</span>, device<span class="op">=</span>t.device) <span class="op">*</span> <span class="op">-</span><span class="va">self</span>.embeddings.to(t.device))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        embeddings <span class="op">=</span> t[:, <span class="va">None</span>] <span class="op">*</span> embeddings[<span class="va">None</span>, :]</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.cat((embeddings.sin(), embeddings.cos()), dim<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>:::</p>
+<p>::: {#f3589e92 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.021106,“end_time”:“2026-06-28T15:57:20.086938”,“exception”:false,“start_time”:“2026-06-28T15:57:20.065832”,“status”:“completed”}}’ tags=‘[]’ execution_count=14}</p>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UNET(torch.nn.Module):</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, in_channels: <span class="bu">int</span>, channels: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.in_channels <span class="op">=</span> in_channels</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.channels <span class="op">=</span> channels</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.init_cnv <span class="op">=</span> ConvBlock(in_channels<span class="op">=</span>in_channels, out_channels<span class="op">=</span>channels[<span class="dv">0</span>])</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        time_channels <span class="op">=</span> channels[<span class="dv">0</span>] <span class="op">*</span> <span class="dv">4</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.time_enc <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>            SinusoidalPositionEmbeddings(time_channels<span class="op">=</span>channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>),</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>            torch.nn.Linear(channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>, channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">4</span>),</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>            torch.nn.SiLU(),</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Encoder/decoder</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.encoder <span class="op">=</span> torch.nn.ModuleList([])</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.decoder <span class="op">=</span> torch.nn.ModuleList([])</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> in_channels, out_channels <span class="kw">in</span> <span class="bu">zip</span>(channels[:<span class="op">-</span><span class="dv">1</span>], channels[<span class="dv">1</span>:]):</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.encoder.append(ResidualUnetBlock(in_channels, out_channels, time_channels<span class="op">=</span>time_channels, upsample<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.decoder.append(ResidualUnetBlock(out_channels<span class="op">*</span><span class="dv">2</span>, in_channels,time_channels<span class="op">=</span>time_channels,  upsample<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attn_block <span class="op">=</span> Attention2D(in_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>], out_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">2</span>, head_channels<span class="op">=</span><span class="dv">16</span>, n_heads<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attn_norm <span class="op">=</span> torch.nn.GroupNorm(num_groups<span class="op">=</span><span class="dv">1</span>, num_channels<span class="op">=</span>channels[<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">2</span>)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.final_cnv <span class="op">=</span> ConvBlock(in_channels<span class="op">=</span>channels[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, out_channels<span class="op">=</span><span class="va">self</span>.in_channels, nrm<span class="op">=</span><span class="va">False</span>, act<span class="op">=</span><span class="va">False</span>, )</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: torch.Tensor, t: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.init_cnv(x)</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> <span class="va">self</span>.time_enc(t)</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>        skip_connection <span class="op">=</span> []</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> layer <span class="kw">in</span> <span class="va">self</span>.encoder:</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>            x, h <span class="op">=</span> layer(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>            skip_connection.append(h)</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.attn_block(x)</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.attn_norm(x)</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> layer <span class="kw">in</span> <span class="va">self</span>.decoder[::<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>            x, _ <span class="op">=</span> layer(x<span class="op">=</span>x, t<span class="op">=</span>t)</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> torch.cat((x, skip_connection.pop(<span class="op">-</span><span class="dv">1</span>)), dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.final_cnv(x)</span></code></pre></div>
+<p>:::</p>
+<p>::: {#854247ad .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.015558,“end_time”:“2026-06-28T15:57:20.110133”,“exception”:false,“start_time”:“2026-06-28T15:57:20.094575”,“status”:“completed”}}’ tags=‘[]’ execution_count=15}</p>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> batch_distort(x_trn: torch.Tensor, batch_size: <span class="bu">int</span>, t: torch.Tensor) <span class="op">-&gt;</span> <span class="bu">tuple</span>[torch.Tensor, torch.Tensor, torch.Tensor]:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> t <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.randint(<span class="dv">0</span>, diffusion_timesteps<span class="op">-</span><span class="dv">1</span>, (batch_size,))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    noise <span class="op">=</span> torch.randn_like(x_trn)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> q_sample(gaussian_dict_np<span class="op">=</span>diffusion_dict_np, x_start <span class="op">=</span> x_trn.numpy(), timesteps<span class="op">=</span>t.numpy(), noise<span class="op">=</span>noise.numpy())</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.from_numpy(xt).to(torch.float32), noise, t</span></code></pre></div>
+<p>:::</p>
+<p>::: {#7e442214 .cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ quarto-private-1=‘{“key”:“papermill”,“value”:{“duration”:0.016137,“end_time”:“2026-06-28T15:57:20.133624”,“exception”:false,“start_time”:“2026-06-28T15:57:20.117487”,“status”:“completed”}}’ tags=‘[]’ execution_count=16}</p>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_q_sample(x: torch.Tensor, xt: torch.Tensor, ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>].imshow(xt, cmap<span class="op">=</span><span class="st">"binary"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>].imshow(x, cmap<span class="op">=</span><span class="st">"binary"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>].set_title(<span class="vs">r"</span><span class="dv">$</span><span class="vs">x_t</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>].set_title(<span class="vs">r"</span><span class="dv">$</span><span class="vs">x_0</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=</span> [ax.axis(<span class="st">"off"</span>) <span class="cf">for</span> ax <span class="kw">in</span> axs.flatten()]</span></code></pre></div>
+<p>:::</p>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - From definition to loss function </b>
+</div>
+<p>Okey, now we have everything defined we can finally train our model.</p>
+<div id="a3578e00" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;papermill&quot;,&quot;value&quot;:{&quot;duration&quot;:0.071085,&quot;end_time&quot;:&quot;2026-06-28T15:57:20.226551&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-06-28T15:57:20.155466&quot;,&quot;status&quot;:&quot;completed&quot;}}" data-tags="[]" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>unet <span class="op">=</span> UNET(in_channels<span class="op">=</span><span class="dv">1</span>, channels<span class="op">=</span>[<span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>])</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>unet.parameters(), lr<span class="op">=</span>learning_rate, )</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>diffusion_dict_np <span class="op">=</span> get_diffusion_dict_np(beta_start<span class="op">=</span>beta_start, beta_end<span class="op">=</span>beta_end, diffusion_timesteps<span class="op">=</span>diffusion_timesteps)</span></code></pre></div>
+</div>
+<div id="5789ee79" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;papermill&quot;,&quot;value&quot;:{&quot;duration&quot;:2037.982108,&quot;end_time&quot;:&quot;2026-06-28T16:31:18.216027&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-06-28T15:57:20.233919&quot;,&quot;status&quot;:&quot;completed&quot;}}" data-tags="[]" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>iter_loader <span class="op">=</span> <span class="bu">iter</span>(loader)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(n_trn_steps):</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>: </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        x_trn, _ <span class="op">=</span> <span class="bu">next</span>(iter_loader)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">StopIteration</span>:</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        iter_loader <span class="op">=</span> <span class="bu">iter</span>(loader)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        x_trn, _ <span class="op">=</span> <span class="bu">next</span>(iter_loader)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    xt, noise, t <span class="op">=</span> batch_distort(x_trn<span class="op">=</span>x_trn, batch_size<span class="op">=</span>batch_size, t<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    predicted_noise <span class="op">=</span> unet(x<span class="op">=</span>xt, t<span class="op">=</span>t)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> torch.nn.functional.mse_loss(predicted_noise, noise)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step <span class="op">%</span> eval_steps <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>step<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>n_trn_steps<span class="sc">}</span><span class="ss"> loss: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0/5000 loss: 1.1235
+100/5000 loss: 0.4563
+200/5000 loss: 0.2509
+300/5000 loss: 0.1640
+400/5000 loss: 0.1121
+500/5000 loss: 0.1279
+600/5000 loss: 0.0803
+700/5000 loss: 0.0679
+800/5000 loss: 0.0713
+900/5000 loss: 0.0688
+1000/5000 loss: 0.0866
+1100/5000 loss: 0.0522
+1200/5000 loss: 0.0470
+1300/5000 loss: 0.0431
+1400/5000 loss: 0.0661
+1500/5000 loss: 0.0537
+1600/5000 loss: 0.0541
+1700/5000 loss: 0.0464
+1800/5000 loss: 0.0405
+1900/5000 loss: 0.0462
+2000/5000 loss: 0.0492
+2100/5000 loss: 0.0470
+2200/5000 loss: 0.0580
+2300/5000 loss: 0.0452
+2400/5000 loss: 0.0598
+2500/5000 loss: 0.0518
+2600/5000 loss: 0.0470
+2700/5000 loss: 0.0444
+2800/5000 loss: 0.0426
+2900/5000 loss: 0.0474
+3000/5000 loss: 0.0515
+3100/5000 loss: 0.0241
+3200/5000 loss: 0.0332
+3300/5000 loss: 0.0353
+3400/5000 loss: 0.0349
+3500/5000 loss: 0.0325
+3600/5000 loss: 0.0319
+3700/5000 loss: 0.0324
+3800/5000 loss: 0.0387
+3900/5000 loss: 0.0465
+4000/5000 loss: 0.0252
+4100/5000 loss: 0.0341
+4200/5000 loss: 0.0317
+4300/5000 loss: 0.0320
+4400/5000 loss: 0.0261
+4500/5000 loss: 0.0321
+4600/5000 loss: 0.0320
+4700/5000 loss: 0.0328
+4800/5000 loss: 0.0201
+4900/5000 loss: 0.0318</code></pre>
+</div>
+</div>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - Sampling steps </b>
+</div>
+<p>Okey, now we have our model, we can sample some digits!</p>
+<div id="d35f88bf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;papermill&quot;,&quot;value&quot;:{&quot;duration&quot;:139.359332,&quot;end_time&quot;:&quot;2026-06-28T16:33:37.607523&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-06-28T16:31:18.248191&quot;,&quot;status&quot;:&quot;completed&quot;}}" data-tags="[]" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> torch.randn_like(xt)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> timestep <span class="kw">in</span> tqdm(<span class="bu">reversed</span>(<span class="bu">range</span>(<span class="dv">0</span>, diffusion_timesteps<span class="op">-</span><span class="dv">1</span>))):</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.ones_like(xt[:, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]) <span class="op">*</span> timestep</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>        et <span class="op">=</span> unet(x<span class="op">=</span>xt, t<span class="op">=</span>t)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>        model_mean <span class="op">=</span> diffusion_dict_np[<span class="st">"sqrt_recip_alphas"</span>][timestep] <span class="op">*</span> (xt <span class="op">-</span> diffusion_dict_np[<span class="st">"betas"</span>][timestep] <span class="op">*</span> et.detach().numpy() <span class="op">/</span>diffusion_dict_np[<span class="st">"sqrt_one_minus_alphas_cumprod"</span>][timestep])</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> timestep <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>            xt <span class="op">=</span> model_mean <span class="op">+</span> np.sqrt(</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                    diffusion_dict_np[<span class="st">"posterior_variance"</span>][timestep]</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                ) <span class="op">*</span> torch.randn_like(model_mean)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>            xt <span class="op">=</span> model_mean</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>999it [02:19,  7.17it/s]</code></pre>
+</div>
+</div>
+<div id="cee56e1a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;papermill&quot;,&quot;value&quot;:{&quot;duration&quot;:0.323635,&quot;end_time&quot;:&quot;2026-06-28T16:33:37.985741&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2026-06-28T16:33:37.662106&quot;,&quot;status&quot;:&quot;completed&quot;}}" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(xt[<span class="dv">10</span>, <span class="dv">0</span>].numpy(), cmap<span class="op">=</span><span class="st">"binary"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="what-to-diffuse-the-basics_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<a id="1"></a> #
+<div style="text-align:center; border-radius:30px 30px; padding:7px; color:white; margin:0; font-size:150%; font-family:Arial; background-color:#1279D4; overflow:hidden">
+<b> Diffusion models - Sources </b>
+</div>
+<p>This amazing blogpost helped me understand (most of) the math behind diffusion models and inspired me to make my own blogpost combining both the math and python code.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{<span class="ot">weng2021diffusion</span>,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>   = "<span class="st">What are diffusion models?</span>",</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>  = "<span class="st">Weng, Lilian</span>",</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">journal</span> = "<span class="st">lilianweng.github.io</span>",</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>    = "<span class="st">2021</span>",</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">month</span>   = "<span class="st">Jul</span>",</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>     = "<span class="st">https://lilianweng.github.io/posts/2021-07-11-diffusion-models/</span>"</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This blogpost explained the reparameterization trick.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{<span class="ot">weng2018VAE</span>,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>   = "<span class="st">From Autoencoder to Beta-VAE</span>",</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>  = "<span class="st">Weng, Lilian</span>",</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">journal</span> = "<span class="st">lilianweng.github.io</span>",</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>    = "<span class="st">2018</span>",</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>     = "<span class="st">https://lilianweng.github.io/posts/2018-08-12-vae/</span>"</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This work and the <a href="https://yang-song.net/blog/2021/score/">blogpost</a> inspired most of the schematics</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">@inproceedings</span>{</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">song2021scorebased</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>={Score-Based Generative Modeling through Stochastic Differential Equations},</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>={Yang Song and Jascha Sohl-Dickstein and Diederik P Kingma and Abhishek Kumar and Stefano Ermon and Ben Poole},</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">booktitle</span>={International Conference on Learning Representations},</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>={2021},</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>={https://openreview.net/forum?id=PxTIG12RRHS}</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The pytorch code I wrote for this blog was written from scratch to help me explain the algorithm, but it was inspired by the <a href="https://github.com/openai/improved-diffusion/tree/main">code</a> from this work</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{<span class="ot">DBLP:journals</span>/<span class="ot">corr</span>/<span class="ot">abs</span>-<span class="ot">2102</span>-<span class="ot">09672</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>       = {Alex Nichol and</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                  Prafulla Dhariwal},</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>        = {Improved Denoising Diffusion Probabilistic Models},</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">journal</span>      = {CoRR},</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">volume</span>       = {abs/2102.09672},</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>         = {2021},</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>          = {https://arxiv.org/abs/2102.09672},</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eprinttype</span>    = {arXiv},</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eprint</span>       = {2102.09672},</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">timestamp</span>    = {Wed, 24 Feb 2021 15:42:45 +0100},</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">biburl</span>       = {https://dblp.org/rec/journals/corr/abs-2102-09672.bib},</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bibsource</span>    = {dblp computer science bibliography, https://dblp.org}</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>And ofcourse, to the work on diffusion models;</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bib"><code class="sourceCode bibtex"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{<span class="ot">DBLP:journals</span>/<span class="ot">corr</span>/<span class="ot">abs</span>-<span class="ot">2006</span>-<span class="ot">11239</span>,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>       = {Jonathan Ho and</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                  Ajay Jain and</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                  Pieter Abbeel},</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>        = {Denoising Diffusion Probabilistic Models},</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">journal</span>      = {CoRR},</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">volume</span>       = {abs/2006.11239},</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>         = {2020},</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>          = {https://arxiv.org/abs/2006.11239},</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eprinttype</span>    = {arXiv},</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eprint</span>       = {2006.11239},</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">timestamp</span>    = {Tue, 23 Jun 2020 17:57:22 +0200},</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">biburl</span>       = {https://dblp.org/rec/journals/corr/abs-2006-11239.bib},</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bibsource</span>    = {dblp computer science bibliography, https://dblp.org}</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/koenbotermans\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

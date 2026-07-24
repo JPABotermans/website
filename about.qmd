@@ -1,0 +1,10 @@
+---
+title: "About"
+---
+
+I'm Koen Botermans, an AI/ML engineer focused on computer vision and robotics.
+
+Most posts here are grounded in code: each one is backed by a Jupyter notebook you
+can open directly in Google Colab.
+
+- GitHub: [JPABotermans](https://github.com/JPABotermans)
