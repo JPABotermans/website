@@ -1,0 +1,12 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/what-to-diffuse-controlnet-for-coco-ann/what-to-diffuse-controlnet-for-coco-annotations.html",
+      "/posts/hello-quarto/index.html",
+      "/posts/what-to-diffuse-the-basics/what-to-diffuse-the-basics.html",
+      "/posts/computer-vision/how-to-use-dietr.html",
+      "/posts/pytorch-vs-tensorflow/pytorch-vs-tensorflow-2-cnn.html"
+    ]
+  }
+]

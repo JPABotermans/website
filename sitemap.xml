@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://koenbotermans.com/index.html</loc>
+    <lastmod>2026-07-31T00:50:24.022Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/posts/hello-quarto/index.html</loc>
+    <lastmod>2026-07-31T00:50:24.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/posts/what-to-diffuse-controlnet-for-coco-ann/what-to-diffuse-controlnet-for-coco-annotations.html</loc>
+    <lastmod>2026-07-31T00:50:24.068Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/about.html</loc>
+    <lastmod>2026-07-31T00:50:24.022Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/posts/computer-vision/how-to-use-dietr.html</loc>
+    <lastmod>2026-07-31T00:50:24.023Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/posts/pytorch-vs-tensorflow/pytorch-vs-tensorflow-2-cnn.html</loc>
+    <lastmod>2026-07-31T00:50:24.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://koenbotermans.com/posts/what-to-diffuse-the-basics/what-to-diffuse-the-basics.html</loc>
+    <lastmod>2026-07-31T00:50:24.075Z</lastmod>
+  </url>
+</urlset>
